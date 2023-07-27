@@ -16,7 +16,7 @@ class AuthenticationController extends BaseController
     public function authenticate(Request $request): RedirectResponse
     {
         if (auth()->attempt($request->except(['_token']))) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->intended(route('admin.dashboard'));
         }
     }
 
