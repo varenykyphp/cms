@@ -21,5 +21,9 @@ class ServiceProvider extends BaseServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
         $this->loadRoutesFrom(__DIR__.'/../../routes/cms.php');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'varenyky');
+
+        $this->publishes([
+            __DIR__.'/../../config/varenyky.php' => config_path('varenyky.php'),
+        ]);
     }
 }
