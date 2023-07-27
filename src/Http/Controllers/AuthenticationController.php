@@ -10,6 +10,7 @@ class AuthenticationController extends BaseController
 {
     public function login(): View
     {
+        dd(auth()->user());
         return view('varenykyAdmin::login');
     }
 
