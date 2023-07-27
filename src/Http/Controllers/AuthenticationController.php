@@ -10,12 +10,13 @@ class AuthenticationController extends BaseController
 {
     public function login(): View
     {
+        dd(auth());
         return view('varenykyAdmin::login');
     }
 
     public function authenticate(Request $request): RedirectResponse
     {
-        if (auth('web')->attempt($request->except(['_token']))) {
+        if (auth()->attempt($request->except(['_token']))) {
             return redirect()->route('admin.dashboard');
         }
     }
