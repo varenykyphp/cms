@@ -32,6 +32,13 @@
             "Varenyky\\": "/src"
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Varenyky\\Support\\ServiceProvider"
+            ]
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
