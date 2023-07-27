@@ -8,7 +8,7 @@ class DashboardController extends BaseController
 {
     public function __construct()
     {
-        $this->middleware(['role:admin|editor']);
+        // $this->middleware(['role:admin|editor']);
     }
 
     public function index(): View
