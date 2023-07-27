@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('blocks', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('page_id')->constrained();
             $table->longText('key');
             $table->longText('value')->nullable();
             $table->timestamps();
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blocks');
+        Schema::dropIfExists('settings');
     }
 };
