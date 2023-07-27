@@ -18,4 +18,11 @@ class Authenticate extends Middleware
             return route('admin.login');
         }
     }
+
+    protected function authenticate($request, array $guards)
+    {
+        $this->auth->guard('web')->check()
+            ? $this->auth->shouldUse('web')
+            : $this->unauthenticated($request, $guards);
+    }
 }
