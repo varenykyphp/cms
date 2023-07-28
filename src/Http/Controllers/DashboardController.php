@@ -13,6 +13,6 @@ class DashboardController extends BaseController
 
     public function index(): View
     {
-        return view('dashboard.index');
+        return view('varenyky::dashboard.index');
     }
 }

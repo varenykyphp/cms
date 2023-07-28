@@ -1,12 +1,13 @@
 <?php
 
-use Illuminate\Session\Middleware\StartSession;
+use App\Http\Kernel;
 use Illuminate\Support\Facades\Route;
+
 use Varenyky\Http\Controllers\DashboardController;
 use Varenyky\Http\Controllers\AuthenticationController;
 use Varenyky\Http\Middleware\Authenticate;
 
-Route::prefix(config('varenyky.path'))->name('admin.')->middleware([StartSession::class])->group(function () {
+Route::prefix(config('varenyky.path'))->name('admin.')->middleware(resolve(Kernel::class)->getMiddlewareGroups()['web'])->group(function () {
     Route::group(['middleware' => [Authenticate::class]], function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     });
