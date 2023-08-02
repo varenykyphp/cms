@@ -10,9 +10,10 @@
 @section('back-btn', route('admin.menus.index'))
 
 @section('content')
-    <table class="table table-striped">
+<div class="card border p-3">
+    <table class="table">
         <thead>
-            <tr class="table-dark">
+            <tr class="">
                 <th>{{ __('varenyky::labels.name') }}</th>
                 <th>{{ __('varenyky::labels.slug') }}</th></th>
                 <th width="350"></th>
@@ -42,4 +43,5 @@
             @endforelse
         </tbody>
     </table>
+</div>
 @endsection
