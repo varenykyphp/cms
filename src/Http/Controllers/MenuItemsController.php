@@ -31,7 +31,7 @@ class MenuItemsController extends BaseController
         $pages = Page::all();
         $menu_id = $id;
 
-        return view('varenyky::menuItems.create',compact('menu_id','pages','menuItems'));
+        return view('varenyky::menus.items.create',compact('menu_id','pages','menuItems'));
 
     }
 
@@ -49,7 +49,7 @@ class MenuItemsController extends BaseController
 
         $menuItems = MenuItem::where('menu_id',$id)->get();
         $pages = Page::all();
-        return view('varenyky::menuItems.edit', compact('item','id','pages','menuItems'));
+        return view('varenyky::menus.items.edit', compact('item','id','pages','menuItems'));
 
     }
 
