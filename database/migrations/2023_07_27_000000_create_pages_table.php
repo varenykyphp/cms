@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->longText('template')->nullable();
-            $table->longText('content');
             $table->longText('seo_title')->nullable();
             $table->longText('seo_desc')->nullable();
             $table->longText('seo_snip')->nullable();

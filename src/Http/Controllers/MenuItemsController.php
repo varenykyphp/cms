@@ -21,13 +21,13 @@ class MenuItemsController extends BaseController
     {
         $menuItems = MenuItem::where('menu_id',$id)->get();
         $menu_id = $id;
-        return view('varenyky::menuItems.index', compact('menuItems','menu_id'));
+        return view('varenyky::menus.items.index', compact('menuItems','menu_id'));
     }
 
     public function create(int $id): View
     {
         $menu_id = $id;
-        return view('varenyky::menuItems.create',compact('menu_id'));
+        return view('varenyky::menus.items.create',compact('menu_id'));
     }
 
     public function store(Request $request,int $id): RedirectResponse
@@ -41,7 +41,7 @@ class MenuItemsController extends BaseController
 
     public function edit(int $id, MenuItem $item): View
     {
-        return view('varenyky::menuItems.edit', compact('item','id'));
+        return view('varenyky::menus.items.edit', compact('item','id'));
     }
 
     public function update(Request $request,int $id, MenuItem $item): RedirectResponse
