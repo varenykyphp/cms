@@ -41,24 +41,15 @@
                             class="form-control" value="{{ old('seo_desc') }}">
                     </div>
                     <div class="form-group mb-3">
-                        <label for="seo_snip">{{ __('varenyky::labels.seo_snip') }}</label>
-                        <input id="seo_snip" name="seo_snip" placeholder="{{ __('varenyky::labels.seo_snip') }}..."
-                            class="form-control" value="{{ old('seo_snip') }}">
+                        <label for="parent" class="form-label">{{ __('varenyky::labels.parent') }}</label>
+                        <select name="parent" class="form-select mb-3" aria-label="Default select example">
+                            <option value="0">{{ __('varenyky::labels.head') }}</option>
+                            @foreach ($pages as $page)
+                                <option value="{{ $page->id }}">{{ $page->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
-                    <div class="form-group mb-3">
-                        <label for="seo_key">{{ __('varenyky::labels.seo_key') }}</label>
-                        <input id="seo_key" name="seo_key" placeholder="{{ __('varenyky::labels.seo_key') }}..."
-                            class="form-control" value="{{ old('seo_key') }}">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="parent">{{ __('varenyky::labels.parent') }}</label>
-                        <input id="parent" name="parent" placeholder="{{ __('varenyky::labels.parent') }}..."
-                            class="form-control" value="{{ old('parent') }}">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="seo_desc">{{ __('varenyky::labels.content') }}</label>
-                        <textarea name="content" class="form-control" rows="5" id="floatingTextarea"></textarea>
-                    </div>
+                    
                 </div>
             </div>
         </div>

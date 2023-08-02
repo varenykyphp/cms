@@ -29,7 +29,6 @@
                                 name="name" class="form-control @if ($errors->has('name')) is-invalid @endif"
                                 value="{{ $page->name }}">
                         </div>
-                        <hr>
                         <div class="form-group mb-3">
                             <label for="seo_title">{{ __('varenyky::labels.seo_title') }}</label>
                             <input id="seo_title" name="seo_title" placeholder="{{ __('varenyky::labels.seo_title') }}..."
@@ -53,13 +52,13 @@
                                 class="form-control" value="{{ $page->seo_key }}">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="parent">{{ __('varenyky::labels.parent') }}</label>
-                            <input id="parent" name="parent" placeholder="{{ __('varenyky::labels.parent') }}..."
-                                class="form-control" value="{{ $page->parent }}">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="content">{{ __('varenyky::labels.content') }}</label>
-                            <textarea name="content" class="form-control" rows="5" id="floatingTextarea" value="">{{ $page->content }}</textarea>
+                            <label for="parent" class="form-label">{{ __('varenyky::labels.parent') }}</label>
+                            <select name="parent" class="form-select mb-3" aria-label="Default select example">
+                                <option value="0">{{ __('varenyky::labels.head') }}</option>
+                                @foreach ($pages as $page)
+                                    <option @if($page->id == $page->id) selected @endif value="{{ $page->id }}">{{ $page->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>

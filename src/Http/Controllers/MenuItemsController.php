@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Varenyky\Models\Menu\Menu;
 use Varenyky\Models\Menu\MenuItem;
+use Varenyky\Models\Page\Page;
 use Varenyky\Repositories\MenuItemRepository;
 
 class MenuItemsController extends BaseController
@@ -26,8 +27,10 @@ class MenuItemsController extends BaseController
 
     public function create(int $id): View
     {
+        $menuItems = MenuItem::where('menu_id',$id)->get();
+        $pages = Page::all();
         $menu_id = $id;
-        return view('varenyky::menuItems.create',compact('menu_id'));
+        return view('varenyky::menuItems.create',compact('menu_id','pages','menuItems'));
     }
 
     public function store(Request $request,int $id): RedirectResponse
@@ -41,7 +44,9 @@ class MenuItemsController extends BaseController
 
     public function edit(int $id, MenuItem $item): View
     {
-        return view('varenyky::menuItems.edit', compact('item','id'));
+        $menuItems = MenuItem::where('menu_id',$id)->get();
+        $pages = Page::all();
+        return view('varenyky::menuItems.edit', compact('item','id','pages','menuItems'));
     }
 
     public function update(Request $request,int $id, MenuItem $item): RedirectResponse
