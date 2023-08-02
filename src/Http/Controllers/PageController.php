@@ -7,6 +7,7 @@ use Varenyky\Repositories\PageRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Varenyky\Models\Page\Page;
 use Varenyky\Models\Page\Block;
@@ -22,14 +23,14 @@ class PageController extends BaseController
     public function index(): View
     {
         $pages = Page::all();
-        return view('varenyky::pages.index',compact('pages'));
+        return view('varenyky::pages.index', compact('pages'));
     }
 
     public function create(): View
     {
         $pages = Page::all();
         $templates = Storage::allFiles('templates');
-        return view('varenyky::pages.create',compact('pages', 'templates'));
+        return view('varenyky::pages.create', compact('pages', 'templates'));
     }
 
     public function store(Request $request)
@@ -74,7 +75,6 @@ class PageController extends BaseController
         // }
 
         return redirect()->route('admin.pages.index', $page->id)->with('success', __('varenyky::labels.added'));
-
     }
 
     public function edit(Page $page): View
@@ -87,7 +87,7 @@ class PageController extends BaseController
     public function update(Request $request, Page $page): RedirectResponse
     {
 
-        $update = array_filter($request->only(['name', 'seo_title', 'seo_desc','content']));
+        $update = array_filter($request->only(['name', 'seo_title', 'seo_desc', 'content']));
         $this->repository->update($page->id, $update);
 
         foreach ($request->input('tBlock') as $key => $value) {
@@ -105,26 +105,27 @@ class PageController extends BaseController
             }
         }
 
-        // foreach ($request->files as $key => $upload) {
-        //     $key = str_replace('tBlock_', '', $key);
-        //     $filename = str_replace(['.'.$upload->getClientOriginalExtension()], '', $upload->getClientOriginalName());
-        //     $filename = date('Y_m_d_His').'_'.Str::slug($filename, '-');
-        //     $savePath = 'images/'.$filename.'.'.$upload->getClientOriginalExtension();
-        //     if (File::put(public_path($savePath), file_get_contents($upload->getRealPath()))) {
-        //         $block = PageBlock::where('page_id', $page->id)->where('template_block_id', $key)->first();
-        //         if ($block === null) {
-        //             $block = new PageBlock;
-        //             $block->page_id = $page->id;
-        //             $block->template_block_id = $key;
-        //             $block->value = "/".$savePath;
-        //             $block->save();
-        //         } else {
-        //             $block->update([
-        //                 'value' => "/".$savePath,
-        //             ]);
-        //         }
-        //     }
-        // }
+        foreach ($request->files as $key => $slug) {
+            $filename = str_replace(['.' . $slug->getClientOriginalExtension()], '', $slug->getClientOriginalName());
+            $filename = date('Y_m_d_His') . '_' . Str::slug($filename, '-');
+            $savePath = 'images/' . $filename . '.' . $slug->getClientOriginalExtension();
+            if (File::put(public_path($savePath), file_get_contents($slug->getRealPath()))) {
+                $block = Block::where('page_id', $request->input('pageId'))->where('key', $key)->first();
+                $key = explode('_', $key);
+
+                if ($block === null) {
+                    $block = new Block();
+                    $block->page_id = $page->id;
+                    $block->key = $key[1];
+                    $block->value = "/" . $savePath;
+                    $block->save();
+                } else {
+                    $block->update([
+                        'value' => "/" . $savePath,
+                    ]);
+                }
+            }
+        }
 
         return redirect()->route('admin.pages.edit', $page->id)->with('success', __('varenyky::labels.updated'));
     }
@@ -142,16 +143,16 @@ class PageController extends BaseController
             $blocks = [];
             $i = 0;
 
-            foreach (include(storage_path('app/templates/'.$request->input('template').'.php')) as $slug => $type) {
+            foreach (include(storage_path('app/templates/' . $request->input('template') . '.php')) as $slug => $type) {
                 $value = '';
 
                 $blockValue = Block::where('page_id', $request->input('pageId'))->where('key', $slug)->first();
-                if($blockValue !== null){
+                if ($blockValue !== null) {
                     $value = $blockValue->value;
                 }
 
                 $blocks[$i] = [
-                    'name' => ucwords(str_replace(['-'],[' '], $slug)),
+                    'name' => ucwords(str_replace(['-'], [' '], $slug)),
                     'slug' => $slug,
                     'type' => $type,
                     'body' => $value,

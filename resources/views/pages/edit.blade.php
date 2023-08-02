@@ -101,7 +101,7 @@
                     return '<textarea id="tBlock[' + field.slug + ']" name="tBlock[' + field.slug + ']" class="tiny tinymce keyword_checker tblocks" ftype="' + field.type + '" slug="' + field.slug + '">' +
                         field.body + '</textarea>';
                 case 'image':
-                    return '<br><div class="row"><div class="col-3"><img src="' + field.body +
+                    return '<br><div class="row"><div class="col-3"><img src="' +field.body +
                         '" class="rounded w-100"></div><div class="col-9"><input class="form-control" type="file" id="tBlock[' + field.slug + ']" name="tBlock_' + field.slug + '" ftype="' + field
                         .type + '" slug="' + field.slug + '"></div></div>';
                 case 'link':
