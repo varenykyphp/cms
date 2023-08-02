@@ -24,7 +24,8 @@ class PageController extends BaseController
 
     public function create(): View
     {
-        return view('varenyky::pages.create');
+        $pages = Page::all();
+        return view('varenyky::pages.create',compact('pages'));
     }
 
     public function store(Request $request)

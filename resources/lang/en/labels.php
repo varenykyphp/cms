@@ -24,4 +24,6 @@ return [
     'deleted' => 'Deleted',
     'edit' => 'Edit',
     'items' => 'Items',
+    'head' => 'Head',
+    'page' => 'Page',
 ];
