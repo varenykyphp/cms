@@ -36,6 +36,7 @@
                                 @foreach ($templates as $template)
                                     @php
                                         $name = str_replace(['templates/', '.php'], ['',''], $template);
+                                     
                                     @endphp
                                     <option @if($name == $page->template) selected @endif value="{{ $name }}">{{ $name }}</option>
                                 @endforeach
