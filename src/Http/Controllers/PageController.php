@@ -2,11 +2,14 @@
 
 namespace Varenyky\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Varenyky\Repositories\PageRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Varenyky\Models\Page\Page;
+use Varenyky\Models\Page\Block;
 use Illuminate\Support\Str;
 
 class PageController extends BaseController
@@ -15,7 +18,7 @@ class PageController extends BaseController
     {
         $this->repository = $repository;
     }
-    
+
     public function index(): View
     {
         $pages = Page::all();
@@ -25,7 +28,8 @@ class PageController extends BaseController
     public function create(): View
     {
         $pages = Page::all();
-        return view('varenyky::pages.create',compact('pages'));
+        $templates = Storage::allFiles('templates');
+        return view('varenyky::pages.create',compact('pages', 'templates'));
     }
 
     public function store(Request $request)
@@ -70,15 +74,15 @@ class PageController extends BaseController
         // }
 
         return redirect()->route('admin.pages.index', $page->id)->with('success', __('varenyky::labels.added'));
-        
+
     }
 
     public function edit(Page $page): View
     {
-        // $templates = $this->templateRepository->getAll();
+        $templates = Storage::allFiles('templates');
         $pages = Page::where('id', '<>', $page->id)->get();
 
-        return view('varenyky::pages.edit', compact('page', 'pages'));
+        return view('varenyky::pages.edit', compact('page', 'pages', 'templates'));
     }
     public function update(Request $request, Page $page): RedirectResponse
     {
@@ -86,20 +90,20 @@ class PageController extends BaseController
         $update = array_filter($request->only(['name', 'seo_title', 'seo_desc','content']));
         $this->repository->update($page->id, $update);
 
-        // foreach ($request->input('tBlock') as $key => $value) {
-        //     $block = PageBlock::where('page_id', $page->id)->where('template_block_id', $key)->first();
-        //     if ($block === null) {
-        //         $block = new PageBlock;
-        //         $block->page_id = $page->id;
-        //         $block->template_block_id = $key;
-        //         $block->value = $value;
-        //         $block->save();
-        //     } else {
-        //         $block->update([
-        //             'value' => $value,
-        //         ]);
-        //     }
-        // }
+        foreach ($request->input('tBlock') as $key => $value) {
+            $block = Block::where('page_id', $request->input('pageId'))->where('key', $key)->first();
+            if ($block === null) {
+                $block = new Block;
+                $block->page_id = $page->id;
+                $block->key = $key;
+                $block->value = $value;
+                $block->save();
+            } else {
+                $block->update([
+                    'value' => $value,
+                ]);
+            }
+        }
 
         // foreach ($request->files as $key => $upload) {
         //     $key = str_replace('tBlock_', '', $key);
@@ -130,5 +134,32 @@ class PageController extends BaseController
         $page->delete();
 
         return redirect()->route('admin.pages.index')->with('error', __('varenyky::labels.deleted'));
+    }
+
+    public function getBlocks(Request $request): JsonResponse
+    {
+        if ($request->isXmlHttpRequest()) {
+            $blocks = [];
+            $i = 0;
+
+            foreach (include(storage_path('app/templates/'.$request->input('template').'.php')) as $slug => $type) {
+                $value = '';
+
+                $blockValue = Block::where('page_id', $request->input('pageId'))->where('key', $slug)->first();
+                if($blockValue !== null){
+                    $value = $blockValue->value;
+                }
+
+                $blocks[$i] = [
+                    'name' => ucwords(str_replace(['-'],[' '], $slug)),
+                    'slug' => $slug,
+                    'type' => $type,
+                    'body' => $value,
+                ];
+                $i++;
+            }
+
+            return response()->json($blocks);
+        }
     }
 }
