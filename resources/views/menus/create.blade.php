@@ -10,7 +10,7 @@
 @section('back-btn', route('admin.menus.index'))
 
 @section('content')
-   
+
         <form action="{{ route('admin.menus.store') }}" method="POST" id="nopulpForm" enctype="multipart/form-data">
             @csrf
             <div class="row">
@@ -27,5 +27,4 @@
                 </div>
             </div>
         </form>
-    
 @endsection

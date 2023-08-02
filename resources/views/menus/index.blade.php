@@ -27,19 +27,8 @@
                             <a href="{{ route('admin.items.index', $menu->id) }}" class="btn btn-sm btn-dark me-1">
                                 <i class="fa-solid fa-bars"></i> {{ __('varenyky::labels.items') }}
                             </a>
-                            <a href="{{ route('admin.menus.edit', $menu->id) }}" class="btn btn-sm btn-dark me-1">
-                                <i class="fas fa-pencil me-2"></i>{{ __('varenyky::labels.edit') }}
-                            </a>
-                            <form action="{{ route('admin.menus.destroy', $menu->id) }}" id="deleteform" method="POST"
-                                style="display:inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" onclick="" class="btn btn-sm btn-danger"><i
-                                        class="fas fa-trash-alt me-2"></i>{{ __('varenyky::labels.delete') }}</button>
-                            </form>
+                            @include('varenykyAdmin::actions', ['route' => 'admin.menus', 'entity' => $menu])
                         </td>
-
-                        {{-- <td align="right">@include('admin.layouts.actions', ['route' => 'admin.pages', 'entity' => $page])</td> --}}
                     </tr>
                 @empty
                     <tr>
