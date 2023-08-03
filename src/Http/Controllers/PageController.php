@@ -91,7 +91,7 @@ class PageController extends BaseController
         $this->repository->update($page->id, $update);
 
         foreach ($request->input('tBlock') as $key => $value) {
-            $block = Block::where('page_id', $request->input('pageId'))->where('key', $key)->first();
+            $block = Block::where('page_id', $page->id)->where('key', $key)->first();
             if ($block === null) {
                 $block = new Block;
                 $block->page_id = $page->id;
