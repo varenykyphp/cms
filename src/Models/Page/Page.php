@@ -10,7 +10,6 @@ class Page extends Model
         'name',
         'slug',
         'template',
-        'content',
         'seo_title',
         'seo_desc',
         'seo_snip',

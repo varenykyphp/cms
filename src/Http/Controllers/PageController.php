@@ -43,7 +43,6 @@ class PageController extends BaseController
         $page->seo_snip = $request->input('seo_snip');
         $page->seo_title = $request->input('seo_title');
         $page->seo_desc = $request->input('seo_desc');
-        $page->content = $request->input('content');
         $page->parent = $request->input('parent');
         $page->published = 0;
         $page->save();
@@ -94,6 +93,7 @@ class PageController extends BaseController
 
         return view('varenyky::pages.edit', compact('page', 'pages', 'templates'));
     }
+
     public function update(Request $request, Page $page): RedirectResponse
     {
 

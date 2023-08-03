@@ -2,14 +2,14 @@
 
 namespace Varenyky\Repositories;
 
-use Varenyky\Models\Page\Page;
+use Varenyky\Models\Setting\Setting;
 
-class PageRepository extends Repository
+class SettingRepository extends Repository
 {
     /**
      * To initialize class objects/variable.
      */
-    public function __construct(Page $model)
+    public function __construct(Setting $model)
     {
         $this->model = $model;
     }

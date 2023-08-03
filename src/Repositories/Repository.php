@@ -20,6 +20,11 @@ class Repository
         return $this->model->all();
     }
 
+    public function getById($id)
+    {
+        return $this->model->where('id', $id);
+    }
+
     public function getAllPaginated($paginate = 25)
     {
         return $this->model->paginate($paginate);
