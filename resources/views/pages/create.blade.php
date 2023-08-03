@@ -29,6 +29,19 @@
                             name="name" class="form-control @if ($errors->has('name')) is-invalid @endif"
                             value="{{ old('name') }}">
                     </div>
+                    <div class="form-group mb-3">
+                        <label for="template" class="form-label">{{ __('varenyky::labels.template') }}</label>
+                        <select name="template" class="form-select mb-3" aria-label="Default select example" data-action="get-blocks" data-href="/admin/pages/get-blocks">
+                            <option value="">{{ __('varenyky::labels.choice') }}</option>
+                            @foreach ($templates as $template)
+                                @php
+                                    $name = str_replace(['templates/', '.php'], ['',''], $template);
+                                 
+                                @endphp
+                                <option value="{{ $name }}">{{ $name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <hr>
                     <div class="form-group mb-3">
                         <label for="seo_title">{{ __('varenyky::labels.seo_title') }}</label>

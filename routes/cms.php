@@ -14,6 +14,7 @@ use Varenyky\Http\Middleware\Authenticate;
 Route::prefix(config('varenyky.path'))->name('admin.')->middleware(resolve(Kernel::class)->getMiddlewareGroups()['web'])->group(function () {
     Route::group(['middleware' => [Authenticate::class]], function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::post('pages/get-blocks', [PageController::class, 'getBlocks']);
         Route::resource('/pages', PageController::class);
         Route::resource('/menus', MenuController::class);
         Route::resource('/menu/{id}/items', MenuItemsController::class);

@@ -27,4 +27,5 @@ return [
     'head' => 'Head',
     'page' => 'Page',
     'choice' => 'Make a choice',
+    'template' => 'Template',
 ];
