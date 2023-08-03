@@ -36,7 +36,6 @@
                             @foreach ($templates as $template)
                                 @php
                                     $name = str_replace(['templates/', '.php'], ['',''], $template);
-                                 
                                 @endphp
                                 <option value="{{ $name }}">{{ $name }}</option>
                             @endforeach
@@ -68,3 +67,91 @@
         </div>
     </form>
 @endsection
+@section('js')
+    <script>
+        function addField(field) {
+            let input = getField(field);
+            window.$('.template-blocks').append(
+                '<div class="form-group mb-3">' +
+                '<label for="tBlock[' + field.slug + ']">' + field.name + '</label>' + input +
+                '</div>'
+            );
+        }
+
+        function getField(field) {
+            if (window.$.inArray(field.value, ['', null, undefined]) !== -1) {
+                field.value = '';
+            }
+            switch (field.type) {
+                case 'text':
+                    return '<input type="text" id="tBlock[' + field.slug + ']" name="tBlock[' + field.slug + ']" class="form-control keyword_checker tblocks" ftype="' + field.type + '" slug="' +
+                        field.slug + '" value="' + field.body + '">';
+                case 'wysiwyg':
+                    return '<textarea id="tBlock[' + field.slug + ']" name="tBlock[' + field.slug + ']" class="tiny tinymce keyword_checker tblocks" ftype="' + field.type + '" slug="' + field.slug + '">' +
+                        field.body + '</textarea>';
+                case 'image':
+                    return '<br><div class="row"><div class="col-3"><img src="' + field.body +
+                        '" class="rounded w-100"></div><div class="col-9"><input class="form-control" type="file" id="tBlock[' + field.slug + ']" name="tBlock_' + field.slug + '" ftype="' + field
+                        .type + '" slug="' + field.slug + '"></div></div>';
+                case 'link':
+                    let pages = @json($pages);
+                    var selectField = '<select class="form-select" id="tBlock[' + field.slug + ']" name="tBlock[' + field.slug + ']" ftype="' + field.type + '" slug="' + field.slug +
+                        '"><option value="">{{ __('labels.choice') }}</option>';
+                    for (let i = 0; i < pages.length; i++) {
+                        let selected = null;
+                        if (parseInt(pages[i].id) === parseInt(field.body)) {
+                            selected = 'selected="selected"';
+                        }
+                        selectField += '<option ' + selected + ' value="' + pages[i].id + '">' + pages[i].name + '</option>';
+                    }
+                    selectField += '</select>';
+                    return selectField;
+            }
+        }
+
+        window.$('[data-action="get-blocks"]').on('change', function() {
+            let template = $(this).val();
+            window.$('.removable').remove();
+            window.$.ajax({
+                url: '/admin/pages/get-blocks',
+                method: 'post',
+                data: {
+                    template: template,
+                    pageId: '',
+                    _token: '{{ csrf_token() }}',
+                }
+            }).done(function(data) {
+                window.$.each(data, function(key, field) {
+                    addField(field);
+                });
+                // window.$('.js-example-basic-multiple').select2({
+                //     multiple: true,
+                //     maximumSelectionLength: 24
+                // });
+
+                @php
+                    if (in_array(request()->server('REMOTE_ADDR'), ['127.0.0.1'])) {
+                        $plugins = '"link lists link table hr wordcount code"';
+                    } else {
+                        $plugins = "'link lists link table hr wordcount code'";
+                    }
+                @endphp
+
+                tinymce.init({
+                    selector: '.tiny',
+                    height: 250,
+                    plugins: {!! $plugins !!},
+                    toolbar: "undo redo code | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link hr paste wordcount",
+                    paste_data_images: true,
+                    setup: function(editor) {
+                        editor.on("change keyup", function(e) {
+                            tinyMCE.triggerSave();
+                            editor.save();
+                            window.$(editor.getElement()).trigger('change');
+                        });
+                    }
+                });
+            });
+        }).trigger('change');
+    </script>
+@stop

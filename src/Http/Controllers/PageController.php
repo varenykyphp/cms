@@ -48,31 +48,41 @@ class PageController extends BaseController
         $page->published = 0;
         $page->save();
 
-        // foreach ($request->input('tBlock') as $key => $value) {
-        //     if (is_array($value)) {
-        //         $value = implode(',', $value);
-        //     }
+        foreach ($request->input('tBlock') as $key => $value) {
+            $block = Block::where('page_id', $page->id)->where('key', $key)->first();
+            if ($block === null) {
+                $block = new Block;
+                $block->page_id = $page->id;
+                $block->key = $key;
+                $block->value = $value;
+                $block->save();
+            } else {
+                $block->update([
+                    'value' => $value,
+                ]);
+            }
+        }
 
-        //     $block = new PageBlock();
-        //     $block->page_id = $page->id;
-        //     $block->template_block_id = $key;
-        //     $block->value = $value;
-        //     $block->save();
-        // }
-
-        // foreach ($request->files as $key => $upload) {
-        //     $key = str_replace('tBlock_', '', $key);
-        //     $filename = str_replace(['.'.$upload->getClientOriginalExtension()], '', $upload->getClientOriginalName());
-        //     $filename = date('Y_m_d_His').'_'.Str::slug($filename, '-');
-        //     $savePath = 'images/'.$filename.'.'.$upload->getClientOriginalExtension();
-        //     if (File::put(public_path($savePath), file_get_contents($upload->getRealPath()))) {
-        //         $block = new PageBlock;
-        //         $block->page_id = $page->id;
-        //         $block->template_block_id = $key;
-        //         $block->value = "/".$savePath;
-        //         $block->save();
-        //     }
-        // }
+        foreach ($request->files as $key => $slug) {
+            $filename = str_replace(['.' . $slug->getClientOriginalExtension()], '', $slug->getClientOriginalName());
+            $filename = date('Y_m_d_His') . '_' . Str::slug($filename, '-');
+            $savePath = 'images/' . $filename . '.' . $slug->getClientOriginalExtension();
+            if (File::put(public_path($savePath), file_get_contents($slug->getRealPath()))) {
+                $key = explode('_', $key);
+                $block = Block::where('page_id', $page->id)->where('key', $key[1])->first();
+                if ($block === null) {
+                    $block = new Block();
+                    $block->page_id = $page->id;
+                    $block->key = $key[1];
+                    $block->value = "/" . $savePath;
+                    $block->save();
+                } else {
+                    $block->update([
+                        'value' => "/" . $savePath,
+                    ]);
+                }
+            }
+        }
 
         return redirect()->route('admin.pages.index', $page->id)->with('success', __('varenyky::labels.added'));
     }
