@@ -22,10 +22,36 @@
                 <tbody>
                     @forelse ($settings as $setting)
                         <tr>
-                            <td><label>{{ ucwords(str_replace(['-'], [' '], $setting->key)) }}</label></td>
-                            <td>
-                                <input type="text" required class="form-control" name="{{ $setting->key }}" value="{{ $setting->value }}" placeholder="{{ ucwords(str_replace(['-'], [' '], $setting->key)) }}">
-                            </td>
+                            @if ($setting->key == 'home')
+                                <td><label>{{ ucwords(str_replace(['-'], [' '], $setting->key)) }}</label></td>
+                                <td>
+                                    <select name="{{ $setting->key }}" class="form-select mb-3"
+                                        aria-label="Default select example">
+                                        @foreach ($pages as $page)
+                                            <option @if ($page->id == $setting->value) selected @endif
+                                                value="{{ $page->id }}">{{ $page->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                            @elseif($setting->key == 'language')
+                                <td><label>{{ ucwords(str_replace(['-'], [' '], $setting->key)) }}</label></td>
+                                <td>
+                                    <select name="{{ $setting->key }}" class="form-select mb-3"
+                                        aria-label="Default select example">
+                                        @foreach ($languages as $language)
+                                            <option @if ($language->id == $setting->value) selected @endif
+                                                value="{{ $language->id }}">{{ $language->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                            @else
+                                <td><label>{{ ucwords(str_replace(['-'], [' '], $setting->key)) }}</label></td>
+                                <td>
+                                    <input type="text" required class="form-control" name="{{ $setting->key }}"
+                                        value="{{ $setting->value }}"
+                                        placeholder="{{ ucwords(str_replace(['-'], [' '], $setting->key)) }}">
+                                </td>
+                            @endif
                         </tr>
                     @empty
                         <tr>

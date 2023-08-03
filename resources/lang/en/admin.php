@@ -67,5 +67,17 @@ return [
 
         ],
     ],
+    'settings' => [
+        'index' => [
+            'title' => 'Settings',
+        ],
+        'create' => [
+            'title' => 'Create settings',
+        ],
+        'edit' => [
+            'title' => 'Edit settings',
+
+        ],
+    ],
 
 ];

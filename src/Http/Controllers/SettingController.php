@@ -7,6 +7,8 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Varenyky\Models\Setting\Setting;
 use Illuminate\Support\Str;
+use Varenyky\Models\Page\Page;
+use VarenykyLocale\Models\Language;
 use Varenyky\Repositories\SettingRepository;
 
 class SettingController extends BaseController
@@ -18,8 +20,10 @@ class SettingController extends BaseController
 
     public function index(): View
     {
+        $pages = Page::all();
+        $languages = Language::all();
         $settings = $this->repository->getAllPaginated();
-        return view('varenyky::settings.index', compact('settings'));
+        return view('varenyky::settings.index', compact('settings','pages','languages'));
     }
 
     public function update(Request $request): RedirectResponse
