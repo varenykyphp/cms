@@ -27,25 +27,27 @@
                     <div class="form-group mb-3">
                         <label for="sort_order"
                             class="@if ($errors->has('sort_order')) text-danger @endif">{{ __('varenyky::labels.sort_order') }}</label>
-                        <input id="sort_order" type="text" placeholder="{{ __('varenyky::labels.sort_order') }}..."
-                            name="sort_order" class="form-control @if ($errors->has('sort_order')) is-invalid @endif"
-                            value="{{ $item->sort_order }}">
+                        <input type="number" step="1" required class="form-control" id="sort_order" name="sort_order"
+                        value="{{ $item->sort_order }}">
                     </div>
                     <div class="form-group mb-3">
-                        <label for="link"
-                            class="@if ($errors->has('link')) text-danger @endif">{{ __('varenyky::labels.link') }}</label>
-                        <input id="link" type="text" placeholder="{{ __('varenyky::labels.link') }}..."
-                            name="link" class="form-control @if ($errors->has('link')) is-invalid @endif"
-                            value="{{ $item->link }}">
+                        <label for="link" class="form-label">{{ __('varenyky::labels.link') }}</label>
+                        <select name="link" class="form-select mb-3" aria-label="Default select example">
+                            <option>{{ __('varenyky::labels.choice') }}</option>
+                            @foreach ($pages as $page)
+                                <option @if($item->link == $page->id ) selected @endif value="{{ $page->id }}">{{ $page->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="parent"
-                            class="@if ($errors->has('parent')) text-danger @endif">{{ __('varenyky::labels.parent') }}</label>
-                        <input id="parent" type="text" placeholder="{{ __('varenyky::labels.parent') }}..."
-                            name="parent" class="form-control @if ($errors->has('parent')) is-invalid @endif"
-                            value="{{ $item->parent }}">
+                        <label for="parent" class="form-label">{{ __('varenyky::labels.parent') }}</label>
+                        <select name="parent" class="form-select mb-3" aria-label="Default select example">
+                            <option value="0">{{ __('varenyky::labels.head') }}</option>
+                            @foreach ($menuItems as $menuItem)
+                                <option @if($item->id == $menuItem->id ) selected @endif value="{{ $menuItem->id }}">{{ $menuItem->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
-
                     <div class="form-group mb-3">
                         <label for="type"
                             class="@if ($errors->has('type')) text-danger @endif">{{ __('varenyky::labels.type') }}</label>
