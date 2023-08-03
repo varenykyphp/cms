@@ -87,7 +87,7 @@ class PageController extends BaseController
     public function update(Request $request, Page $page): RedirectResponse
     {
 
-        $update = array_filter($request->only(['name', 'seo_title', 'seo_desc', 'content']));
+        $update = array_filter($request->only(['name', 'seo_title', 'seo_desc', 'template']));
         $this->repository->update($page->id, $update);
 
         foreach ($request->input('tBlock') as $key => $value) {
