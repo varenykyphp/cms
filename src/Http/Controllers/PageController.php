@@ -110,9 +110,8 @@ class PageController extends BaseController
             $filename = date('Y_m_d_His') . '_' . Str::slug($filename, '-');
             $savePath = 'images/' . $filename . '.' . $slug->getClientOriginalExtension();
             if (File::put(public_path($savePath), file_get_contents($slug->getRealPath()))) {
-                $block = Block::where('page_id', $request->input('pageId'))->where('key', $key)->first();
                 $key = explode('_', $key);
-
+                $block = Block::where('page_id', $page->id)->where('key', $key[1])->first();
                 if ($block === null) {
                     $block = new Block();
                     $block->page_id = $page->id;
