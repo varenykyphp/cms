@@ -26,4 +26,6 @@ return [
     'items' => 'Items',
     'head' => 'Head',
     'page' => 'Page',
+    'template' => 'Template',
+    'choice' => 'make a choice',
 ];
