@@ -31,18 +31,28 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="template" class="form-label">{{ __('varenyky::labels.template') }}</label>
-                            <select name="template" class="form-select mb-3" aria-label="Default select example" data-action="get-blocks" data-href="/admin/pages/get-blocks">
+                            <select name="template" class="form-select" aria-label="Default select example" data-action="get-blocks" data-href="/admin/pages/get-blocks">
                                 <option value="">{{ __('varenyky::labels.choice') }}</option>
                                 @foreach ($templates as $template)
                                     @php
                                         $name = str_replace(['templates/', '.php'], ['',''], $template);
-                                     
+
                                     @endphp
                                     <option @if($name == $page->template) selected @endif value="{{ $name }}">{{ $name }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <hr>
+                        <div class="form-group mb-3">
+                            <label for="parent" class="form-label">{{ __('varenyky::labels.parent') }}</label>
+                            <select name="parent" class="form-select" aria-label="Default select example">
+                                <option value="0">{{ __('varenyky::labels.head') }}</option>
+                                @foreach ($pages as $xpage)
+                                    <option @if($xpage->id == $page->id) selected @endif value="{{ $xpage->id }}">{{ $xpage->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card border mt-3 p-3">
                         <div class="form-group mb-3">
                             <label for="seo_title">{{ __('varenyky::labels.seo_title') }}</label>
                             <input id="seo_title" name="seo_title" placeholder="{{ __('varenyky::labels.seo_title') }}..."
@@ -56,22 +66,13 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="seo_snip">{{ __('varenyky::labels.seo_snip') }}</label>
-                            <input id="seo_snip" name="seo_snip" placeholder="{{ __('varenyky::labels.seo_snip') }}..."
-                                class="form-control" value="{{ $page->seo_snip }}">
+                            <textarea id="seo_snip" name="seo_snip" placeholder="{{ __('varenyky::labels.seo_snip') }}..."
+                                class="form-control" rows="3">{{ $page->seo_snip }}</textarea>
                         </div>
                         <div class="form-group mb-3">
                             <label for="seo_key">{{ __('varenyky::labels.seo_key') }}</label>
                             <input id="seo_key" name="seo_key" placeholder="{{ __('varenyky::labels.seo_key') }}..."
                                 class="form-control" value="{{ $page->seo_key }}">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="parent" class="form-label">{{ __('varenyky::labels.parent') }}</label>
-                            <select name="parent" class="form-select mb-3" aria-label="Default select example">
-                                <option value="0">{{ __('varenyky::labels.head') }}</option>
-                                @foreach ($pages as $xpage)
-                                    <option @if($xpage->id == $page->id) selected @endif value="{{ $xpage->id }}">{{ $xpage->name }}</option>
-                                @endforeach
-                            </select>
                         </div>
                     </div>
                 </div>
@@ -108,7 +109,7 @@
                 case 'link':
                     let pages = @json($pages);
                     var selectField = '<select class="form-select" id="tBlock[' + field.slug + ']" name="tBlock[' + field.slug + ']" ftype="' + field.type + '" slug="' + field.slug +
-                        '"><option value="">{{ __('labels.choice') }}</option>';
+                        '"><option value="">{{ __('varenyky::labels.choice') }}</option>';
                     for (let i = 0; i < pages.length; i++) {
                         let selected = null;
                         if (parseInt(pages[i].id) === parseInt(field.body)) {
