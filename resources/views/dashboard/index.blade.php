@@ -1,5 +1,7 @@
 @extends('varenykyAdmin::app')
 
 @section('content')
-    <h1>Hello world!</h1>
+    <div class="card border p-3">
+        <h3>Coming soon</h3>
+    </div>
 @endsection

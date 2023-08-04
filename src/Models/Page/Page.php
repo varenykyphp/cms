@@ -22,8 +22,8 @@ class Page extends Model
     {
         $blocks = [];
         foreach (Block::where('page_id', $this->id)->get() as $block) {
-            if ($block->templateblock !== null) {
-                $blocks[$block->templateblock->slug] = get_block_value($block);
+            if ($block->value !== null) {
+                $blocks[$block->key] = get_block_value($block);
             }
         }
 

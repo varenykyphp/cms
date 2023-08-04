@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="link" class="form-label">{{ __('varenyky::labels.link') }}</label>
-                        <select name="link" class="form-select mb-3" aria-label="Default select example">
+                        <select name="link" class="form-select" aria-label="Default select example">
                             <option>{{ __('varenyky::labels.choice') }}</option>
                             @foreach ($pages as $page)
                                 <option @if($item->link == $page->id ) selected @endif value="{{ $page->id }}">{{ $page->name }}</option>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="parent" class="form-label">{{ __('varenyky::labels.parent') }}</label>
-                        <select name="parent" class="form-select mb-3" aria-label="Default select example">
+                        <select name="parent" class="form-select" aria-label="Default select example">
                             <option value="0">{{ __('varenyky::labels.head') }}</option>
                             @foreach ($menuItems as $menuItem)
                                 <option @if($item->id == $menuItem->id ) selected @endif value="{{ $menuItem->id }}">{{ $menuItem->name }}</option>
