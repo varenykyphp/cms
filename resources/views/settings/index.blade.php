@@ -75,6 +75,10 @@
                     <td>Countries</td>
                     <td><a class="btn btn-sm btn-secondary" href="{{ route('admin.countries.index') }}">Show</a></td>
                 </tr>
+                <tr>
+                    <td>Users</td>
+                    <td><a class="btn btn-sm btn-secondary" href="{{ route('admin.users.index') }}">Show</a></td>
+                </tr>
             </tbody>
         </table>
     </div>

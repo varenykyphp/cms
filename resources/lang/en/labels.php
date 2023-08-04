@@ -28,4 +28,8 @@ return [
     'page' => 'Page',
     'choice' => 'Make a choice',
     'template' => 'Template',
+    'id' => 'Id',
+    'email' => 'Email',
+    'password' => 'Password',
+    'role' => 'Role',
 ];

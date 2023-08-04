@@ -11,7 +11,9 @@ use Varenyky\Http\Controllers\MenuController;
 use Varenyky\Http\Controllers\PageController;
 use Varenyky\Http\Controllers\MenuItemsController;
 use Varenyky\Http\Controllers\SettingController;
+use Varenyky\Http\Controllers\UserController;
 use Varenyky\Http\Middleware\Authenticate;
+
 
 Route::prefix(config('varenyky.path'))->name('admin.')->middleware(resolve(Kernel::class)->getMiddlewareGroups()['web'])->group(function () {
     Route::group(['middleware' => [Authenticate::class]], function () {
@@ -22,6 +24,7 @@ Route::prefix(config('varenyky.path'))->name('admin.')->middleware(resolve(Kerne
         Route::resource('/menu/{id}/items', MenuItemsController::class);
         Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
         Route::post('settings/update', [SettingController::class, 'update'])->name('settings.update');
+        Route::resource('/users', UserController::class);
     });
 
     Route::get('/login', [AuthenticationController::class, 'login'])->name('login');
