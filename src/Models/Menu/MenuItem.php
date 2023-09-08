@@ -4,6 +4,8 @@ namespace Varenyky\Models\Menu;
 
 use Varenyky\Models\Page\Page;
 use Illuminate\Database\Eloquent\Model;
+use VarenykyECom\Models\Category;
+use Illuminate\Support\Str;
 
 class MenuItem extends Model
 {
@@ -27,6 +29,13 @@ class MenuItem extends Model
     {
         if ($this->type == 'link') {
             return $this->link;
+        }
+
+        if ($this->type == 'category') {
+            $category = Category::where('id', $this->link)->first();
+            if ($category !== null) {
+                return "/category/".$category->id."/".Str::slug($category->name);
+            }
         }
 
         $page = Page::where('id', $this->link)->first();
