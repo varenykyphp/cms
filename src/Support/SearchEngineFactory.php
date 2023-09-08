@@ -28,6 +28,8 @@ class SearchEngineFactory
     {
         if($page->seo_title != null){
             $this->title = $page->seo_title;
+        }else{
+            $this->title = $page->name . " | " . $this->settings['site-name'];
         }
 
         if($page->seo_desc != null){

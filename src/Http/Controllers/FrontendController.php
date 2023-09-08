@@ -7,6 +7,7 @@ use Illuminate\View\View;
 use Varenyky\Models\Page\Page;
 use Varenyky\Models\Setting\Setting;
 use Varenyky\Support\SearchEngineFactory;
+use VarenykyECom\Support\EComSearchEngineFactory;
 
 class FrontendController extends BaseController
 {
@@ -14,7 +15,11 @@ class FrontendController extends BaseController
 
     public function __construct()
     {
-        $this->seo = resolve(SearchEngineFactory::class);
+        if(class_exists('VarenykyECom\Support\EComSearchEngineFactory')){
+            $this->seo = resolve(EComSearchEngineFactory::class);
+        }else{
+            $this->seo = resolve(SearchEngineFactory::class);
+        }
     }
 
     public function index(): View
