@@ -32,4 +32,5 @@ return [
     'email' => 'Email',
     'password' => 'Password',
     'role' => 'Role',
+    'category' => 'Category',
 ];
