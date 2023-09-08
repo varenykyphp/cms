@@ -15,7 +15,6 @@
         <thead>
             <tr class="">
                 <th>{{ __('varenyky::labels.name') }}</th>
-                <th>{{ __('varenyky::labels.slug') }}</th></th>
                 <th width="350"></th>
             </tr>
         </thead>
@@ -23,7 +22,6 @@
             @forelse ($menuItems as $menuItem)
                 <tr>
                     <td>{{ $menuItem->name }}</td>
-                    <td>{{ $menuItem->link }}</td>
                     <td align="right">
                         <a href="{{ route( "admin.items.edit", [$menu_id, $menuItem]) }}" class="btn btn-sm btn-dark me-1">
                         <i class="fas fa-pencil me-2"></i>{{ __('varenyky::labels.edit') }}

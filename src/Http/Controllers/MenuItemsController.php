@@ -10,6 +10,7 @@ use Varenyky\Models\Menu\Menu;
 use Varenyky\Models\Menu\MenuItem;
 use Varenyky\Models\Page\Page;
 use Varenyky\Repositories\MenuItemRepository;
+use VarenykyECom\Models\Category;
 
 class MenuItemsController extends BaseController
 {
@@ -30,8 +31,13 @@ class MenuItemsController extends BaseController
         $menuItems = MenuItem::where('menu_id',$id)->get();
         $pages = Page::all();
         $menu_id = $id;
+        $categories = [];
 
-        return view('varenyky::menus.items.create',compact('menu_id','pages','menuItems'));
+        if (class_exists(Category::class)) {
+            $categories = Category::all();
+        }
+
+        return view('varenyky::menus.items.create',compact('menu_id','pages','menuItems', 'categories'));
 
     }
 
@@ -49,7 +55,12 @@ class MenuItemsController extends BaseController
 
         $menuItems = MenuItem::where('menu_id',$id)->get();
         $pages = Page::all();
-        return view('varenyky::menus.items.edit', compact('item','id','pages','menuItems'));
+        $categories = [];
+
+        if (class_exists(Category::class)) {
+            $categories = Category::all();
+        }
+        return view('varenyky::menus.items.edit', compact('item','id','pages','menuItems', 'categories'));
 
     }
 
