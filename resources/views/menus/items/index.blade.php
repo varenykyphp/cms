@@ -6,7 +6,7 @@
     <strong>{{ __('varenyky::admin.menuItems.index.title') }}</strong>
 @stop
 
-@section('create-btn', route('admin.menuItems.create', $menu_id))
+@section('create-btn', route('admin.menuItems.items.create', $menu_id))
 @section('back-btn', route('admin.menus.index'))
 
 @section('content')
