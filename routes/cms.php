@@ -21,7 +21,7 @@ Route::prefix(config('varenyky.path'))->name('admin.')->middleware(resolve(Kerne
         Route::post('pages/get-blocks', [PageController::class, 'getBlocks']);
         Route::resource('/pages', PageController::class);
         Route::resource('/menus', MenuController::class);
-        Route::resource('/menu/{id}/items', MenuItemsController::class);
+        Route::resource('/menu/{id}/items', MenuItemsController::class, ['as' => 'menuItems']);
         Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
         Route::post('settings/update', [SettingController::class, 'update'])->name('settings.update');
         Route::resource('/users', UserController::class);
