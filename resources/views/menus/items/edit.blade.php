@@ -6,12 +6,12 @@
     <strong>{{ __('varenyky::admin.menuItems.edit.title') }}</strong>
 @stop
 
-@section('save-btn', route('admin.items.update', [$id, $item]))
-@section('back-btn', route('admin.items.index', $id))
+@section('save-btn', route('admin.menuItems.update', [$id, $item]))
+@section('back-btn', route('admin.menuItems.index', $id))
 
 @section('content')
 
-    <form action="{{ route('admin.items.update', [$id, $item]) }}" method="POST" id="nopulpForm" enctype="multipart/form-data">
+    <form action="{{ route('admin.menuItems.update', [$id, $item]) }}" method="POST" id="nopulpForm" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row">
