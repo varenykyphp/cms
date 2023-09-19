@@ -24,7 +24,7 @@
                         <td>{{ $menu->name }}</td>
                         <td>{{ $menu->slug }}</td>
                         <td align="right">
-                            <a href="{{ route('admin.menuItems.index', $menu->id) }}" class="btn btn-sm btn-dark me-1">
+                            <a href="{{ route('admin.menuItems.items.index', $menu->id) }}" class="btn btn-sm btn-dark me-1">
                                 <i class="fa-solid fa-bars"></i> {{ __('varenyky::labels.items') }}
                             </a>
                             @include('varenykyAdmin::actions', ['route' => 'admin.menus', 'entity' => $menu])

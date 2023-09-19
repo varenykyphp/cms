@@ -47,7 +47,7 @@ class MenuItemsController extends BaseController
         $create['menu_id'] = $id;
         $menuItems = $this->repository->create($create);
 
-        return redirect()->route('admin.menuItems.index',$id)->with('success', __('varenyky::labels.added'));
+        return redirect()->route('admin.menuItems.items.index',$id)->with('success', __('varenyky::labels.added'));
     }
 
     public function edit(int $id, MenuItem $item): View
@@ -69,13 +69,13 @@ class MenuItemsController extends BaseController
         $update = array_filter($request->except(['_token', '_method']));
         $this->repository->update($item->id, $update);
 
-        return redirect()->route('admin.menuItems.edit',[$id,$item])->with('success', __('varenyky::labels.updated'));
+        return redirect()->route('admin.menuItems.items.edit',[$id,$item])->with('success', __('varenyky::labels.updated'));
     }
 
     public function destroy(int $id,MenuItem $item): RedirectResponse
     {
         $item->delete();
 
-        return redirect()->route('admin.menuItems.index',$id)->with('error', __('varenyky::labels.deleted'));
+        return redirect()->route('admin.menuItems.items.index',$id)->with('error', __('varenyky::labels.deleted'));
     }
 }

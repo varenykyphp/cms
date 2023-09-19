@@ -23,10 +23,10 @@
                 <tr>
                     <td>{{ $menuItem->name }}</td>
                     <td align="right">
-                        <a href="{{ route( "admin.menuItems.edit", [$menu_id, $menuItem]) }}" class="btn btn-sm btn-dark me-1">
+                        <a href="{{ route( "admin.menuItems.items.edit", [$menu_id, $menuItem]) }}" class="btn btn-sm btn-dark me-1">
                         <i class="fas fa-pencil me-2"></i>{{ __('varenyky::labels.edit') }}
                         </a>
-                        <form action="{{ route(  "admin.menuItems.destroy", [$menu_id, $menuItem]) }}" id="deleteform" method="POST" style="display:inline">
+                        <form action="{{ route(  "admin.menuItems.items.destroy", [$menu_id, $menuItem]) }}" id="deleteform" method="POST" style="display:inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" onclick="" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt me-2"></i>{{ __('varenyky::labels.delete') }}</button>

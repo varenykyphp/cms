@@ -6,12 +6,12 @@
     <strong>{{ __('varenyky::admin.menuItems.create.title') }}</strong>
 @stop
 
-@section('save-btn', route('admin.menuItems.store', $menu_id))
-@section('back-btn', route('admin.menuItems.index', $menu_id))
+@section('save-btn', route('admin.menuItems.items.store', $menu_id))
+@section('back-btn', route('admin.menuItems.items.index', $menu_id))
 
 @section('content')
 
-    <form action="{{ route('admin.menuItems.store', $menu_id) }}" method="POST" id="nopulpForm" enctype="multipart/form-data">
+    <form action="{{ route('admin.menuItems.items.store', $menu_id) }}" method="POST" id="nopulpForm" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-12 col-lg-12">
