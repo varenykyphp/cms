@@ -15,7 +15,7 @@
         "laravel/framework": "^9.52|^10.10|^11",
         "laravel/tinker": "^2.8",
         "varenykyphp/admin": "1.1.0",
-        "varenykyphp/locale": "1.0.2"
+        "varenykyphp/locale": "1.1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
