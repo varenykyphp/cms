@@ -14,7 +14,7 @@
         "guzzlehttp/guzzle": "^7.3",
         "laravel/framework": "^9.52|^10.10|^11",
         "laravel/tinker": "^2.8",
-        "varenykyphp/admin": "1.0.4",
+        "varenykyphp/admin": "1.1.0",
         "varenykyphp/locale": "1.0.2"
     },
     "require-dev": {
